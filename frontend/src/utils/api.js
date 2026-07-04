@@ -1,0 +1,39 @@
+import axios from 'axios';
+
+const API_BASE_URL = 'http://localhost:8000';
+
+const api = axios.create({
+  baseURL: API_BASE_URL,
+});
+
+// Automatically inject JWT token into header of every outgoing request
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Intercept responses to handle authentication expirations globally
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      // Clear local storage and redirect if token is bad or expired
+      localStorage.removeItem('token');
+      localStorage.removeItem('isAdmin');
+      if (window.location.pathname !== '/login' && window.location.pathname !== '/register' && window.location.pathname !== '/') {
+        window.location.href = '/login?expired=true';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
+export default api;
