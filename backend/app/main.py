@@ -1,9 +1,15 @@
 import os
+import mimetypes
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+
+# Force correct Windows MIME types for React static assets
+mimetypes.init()
+mimetypes.add_type("application/javascript", ".js")
+mimetypes.add_type("text/css", ".css")
 from .database import engine, Base
 from .routers import auth, profile, assessment, dashboard, recommendation, courses, jobs, resume, report, admin
 
