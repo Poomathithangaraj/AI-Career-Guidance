@@ -67,5 +67,5 @@ def serve_react_app(catchall: str):
     return {"message": "Frontend build files (dist/) not found. Please build the frontend."}
 
 if __name__ == "__main__":
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8080, reload=True)
 

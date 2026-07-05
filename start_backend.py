@@ -26,13 +26,13 @@ except Exception as e:
     print(f"Seed step note: {e} (May already be seeded — continuing)")
 
 # Start the FastAPI server
-print("\nStarting FastAPI server at http://localhost:8000 ...")
-print("API docs available at: http://localhost:8000/docs\n")
+print("\nStarting FastAPI server at http://localhost:8080 ...")
+print("API docs available at: http://localhost:8080/docs\n")
 
 subprocess.run([
     sys.executable, "-m", "uvicorn",
     "app.main:app",
     "--host", "0.0.0.0",
-    "--port", "8000",
+    "--port", "8080",
     "--reload"
 ])
